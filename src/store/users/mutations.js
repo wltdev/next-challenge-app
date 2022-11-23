@@ -1,0 +1,8 @@
+export const SET_DOCS = 'SET_DOCS'
+export const SET_DOC = 'SET_DOC'
+export const SET_ACTION_LOADING = 'SET_ACTION_LOADING'
+export const SET_TEMPLATE_LOADING = 'SET_TEMPLATE_LOADING'
+export const RESET_DOC = 'RESET_DOC'
+export const INCREMENT_PAGE = 'INCREMENT_PAGE'
+export const DECREMENT_PAGE = 'DECREMENT_PAGE'
+export const SET_ITEMS = 'SET_ITEMS'

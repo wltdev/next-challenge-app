@@ -1,0 +1,6 @@
+{
+  "projects": {
+    "production": "introspecta-production",
+    "dev": "testing-app-4c271"
+  }
+}

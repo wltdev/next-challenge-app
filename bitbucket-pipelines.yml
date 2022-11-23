@@ -1,0 +1,74 @@
+image: node:16.15.0
+pipelines:
+  branches:
+    master:
+      - step:
+          deployment: production
+          caches:
+            - node
+          script:
+            - yarn global add firebase-tools
+            - yarn install
+            - yarn build
+            - firebase deploy --only hosting:admin-production --token=$FIREBASE_TOKEN --project=$PROJECT_NAME_PROD
+          artifacts:
+            - dist/*
+            - dist/**/*
+            - dist/**/**
+    dev:
+      - step:
+          deployment: staging
+          caches:
+            - node
+          script:
+            - yarn global add firebase-tools
+            - yarn install
+            - yarn build
+            - firebase deploy --only hosting:admin-staging --token=$FIREBASE_TOKEN --project=$PROJECT_NAME_STAGING
+          artifacts:
+            - dist/*
+            - dist/**/*
+            - dist/**/**
+  pull-requests:
+    bugfix/*:
+      - step:
+          deployment: test
+          caches:
+            - node
+          script:
+            - yarn global add firebase-tools
+            - yarn install
+            - yarn build
+            - firebase deploy --only hosting:admin-dev --token=$FIREBASE_TOKEN --project=$PROJECT_NAME_DEV
+          artifacts:
+            - dist/*
+            - dist/**/*
+            - dist/**/**
+    feature/*:
+      - step:
+          deployment: test
+          caches:
+            - node
+          script:
+            - yarn global add firebase-tools
+            - yarn install
+            - yarn build
+            - firebase deploy --only hosting:admin-dev --token=$FIREBASE_TOKEN --project=$PROJECT_NAME_DEV
+          artifacts:
+            - dist/*
+            - dist/**/*
+            - dist/**/**
+    hotfix/*:
+      - step:
+          deployment: test
+          caches:
+            - node
+          script:
+            - yarn global add firebase-tools
+            - yarn install
+            - yarn build
+            - firebase deploy --only hosting:admin-dev --token=$FIREBASE_TOKEN --project=$PROJECT_NAME_DEV
+          artifacts:
+            - dist/*
+            - dist/**/*
+            - dist/**/**

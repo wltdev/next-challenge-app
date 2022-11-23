@@ -1,0 +1,28 @@
+{
+  "projects": {
+    "default": "introspecta-dev"
+  },
+  "targets": {
+    "introspecta-dev": {
+      "hosting": {
+        "admin-dev": [
+          "admin-introspecta-dev"
+        ]
+      }
+    },
+    "introspecta-staging": {
+      "hosting": {
+        "admin-staging": [
+          "admin-introspecta-staging"
+        ]
+      }
+    },
+    "introspecta-production": {
+      "hosting": {
+        "admin-production": [
+          "admin-introspecta"
+        ]
+      }
+    }
+  }
+}
