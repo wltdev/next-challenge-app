@@ -16,6 +16,7 @@
                   <form role="form" class="text-start" @submit.prevent="signin">
                     <label>Email</label>
                     <vsud-input
+                      id="email"
                       v-model:value="email"
                       type="email"
                       placeholder="Email"
@@ -23,6 +24,7 @@
                     />
                     <label>Password</label>
                     <vsud-input
+                      id="password"
                       v-model:value="password"
                       type="password"
                       placeholder="Password"

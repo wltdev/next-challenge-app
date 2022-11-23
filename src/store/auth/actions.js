@@ -1,4 +1,4 @@
-import { login, signOut } from '@/services/authService'
+import { login, signOut, update } from '@/services/authService'
 import { SET_USER, SET_USER_ERROR } from './mutations'
 
 export const actions = {
@@ -29,6 +29,25 @@ export const actions = {
       return user
     } catch (error) {
       commit(SET_USER_ERROR, ' E-mail ou senha incorretos. Tente novamente.')
+      throw Error('user_incorret_info')
+    } finally {
+      commit('SET_GLOBAL_LOADING', false, {
+        root: true
+      })
+    }
+  },
+
+  updateProfile: async({ commit }, payload) => {
+    commit(SET_USER_ERROR, '')
+    commit('SET_GLOBAL_LOADING', true, {
+      root: true
+    })
+    try {
+      const user = await update(payload)
+      commit(SET_USER, user)
+      return user
+    } catch (error) {
+      commit(SET_USER_ERROR, error)
       throw Error('user_incorret_info')
     } finally {
       commit('SET_GLOBAL_LOADING', false, {

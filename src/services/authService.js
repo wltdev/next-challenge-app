@@ -10,4 +10,12 @@ export const login = async({ email, password }) => {
   return data.user
 }
 
+export const update = async(payload) => {
+  const { data } = await api.put('/profile', payload)
+
+  setLocalUser(data)
+
+  return data
+}
+
 export const signOut = () => logout()

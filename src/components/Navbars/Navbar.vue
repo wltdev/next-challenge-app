@@ -15,18 +15,8 @@
         <div
           class="pe-md-3 d-flex align-items-center"
           :class="$store.state.isRTL ? 'me-md-auto' : 'ms-md-auto'"
-        >
-          <!-- <div class="input-group">
-            <span class="input-group-text text-body">
-              <i class="fas fa-search" aria-hidden="true"></i>
-            </span>
-            <input
-              type="text"
-              class="form-control"
-              :placeholder="$store.state.isRTL ? 'أكتب هنا...' : 'Type here...'"
-            />
-          </div> -->
-        </div>
+        />
+
         <ul class="navbar-nav justify-content-end">
           <li v-if="!loggedUser" class="nav-item d-flex align-items-center">
             <router-link
@@ -82,7 +72,7 @@
                 <a
                   class="dropdown-item border-radius-md"
                   href="javascript:;"
-                  @click="$router.push('profile')"
+                  @click="goToProfile"
                 >
                   <div class="py-1 d-flex">Profile</div>
                 </a>
@@ -135,7 +125,7 @@ export default {
   data() {
     return {
       showMenu: false,
-      showUserMenu: false
+      showMenuUser: false
     }
   },
 
@@ -181,6 +171,12 @@ export default {
     ...mapMutations(['navbarMinimize', 'toggleConfigurator']),
     ...mapActions(['toggleSidebarColor']),
     ...mapActions('auth', ['signOut']),
+
+    goToProfile () {
+      console.log('alskjdlkasjd')
+      this.showMenuUser = false
+      this.$router.push('/profile')
+    },
 
     toggleSidebar() {
       this.toggleSidebarColor('bg-white')
