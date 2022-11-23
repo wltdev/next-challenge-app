@@ -18,7 +18,7 @@ export default {
     limit: 10,
     docs: [],
     items: [], // shown on table
-    filter: '',
+    search: '',
     doc: {},
     actionLoading: false,
     templateLoading: false
@@ -29,13 +29,13 @@ export default {
     getDocs: (state) => state.docs,
     getItems: (state) => state.items,
     getPage: (state) => state.page,
+    getSearch: (state) => state.search,
     isLoading: (state) => state.actionLoading
   },
 
   mutations: {
     [SET_DOCS](state, { docs, nextPageToken, lastPage }) {
       state.docs = state.docs.concat(docs)
-      state.nextPageToken = nextPageToken
       state.lastPage = lastPage
     },
     [SET_ITEMS](state, items) {

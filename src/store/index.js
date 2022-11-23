@@ -18,7 +18,10 @@ export default createStore({
     showFooter: true,
     showMain: true,
     globalLoading: false,
-    appConfig: {}
+    appConfig: {},
+    showToast: false,
+    toastType: 'error',
+    toastMessage: ''
   },
   mutations: {
     toggleConfigurator(state) {
@@ -58,6 +61,11 @@ export default createStore({
     },
     SET_APP_CONFIG: (state, config) => {
       state.appConfig = config
+    },
+    SET_SHOW_TOAST: (state, toast) => {
+      state.showToast = toast.showToast
+      state.toastType = toast.type
+      state.toastMessage = toast.message
     }
   },
   actions: {

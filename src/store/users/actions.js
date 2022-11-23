@@ -16,10 +16,11 @@ export const actions = {
       root: true
     })
     try {
-      const { lastPage, limit } = state
-      const docs = await getUsers({ lastPage, limit })
+      const { page, limit, search } = state
+      const docs = await getUsers({ page, limit, search })
       commit(SET_DOCS, {
-        docs
+        docs,
+        lastPage: 1
       })
       commit(SET_ITEMS, docs)
     } catch (error) {
@@ -33,8 +34,8 @@ export const actions = {
   },
 
   prevPage: async ({ commit, state }) => {
-    const { page, docs } = state
-    const pagination = 10
+    const { page, docs, limit } = state
+    const pagination = limit
 
     if (page > 1) {
       const prev = page - 1
@@ -51,8 +52,8 @@ export const actions = {
   },
 
   nextPage: async ({ commit, dispatch, state }) => {
-    const { page, lastPage, nextPageToken, docs, orderBy, direction } = state
-    const pagination = 10
+    const { page, lastPage, docs, limit, search } = state
+    const pagination = limit
 
     const next = page + 1
     if (next <= lastPage) {
@@ -64,23 +65,21 @@ export const actions = {
       return items
     }
 
-    if (next > lastPage && nextPageToken) {
+    if (next > lastPage) {
       commit(SET_ACTION_LOADING, true)
       try {
-        const { docs, pageToken } = await getUsers({ nextPageToken, orderBy, direction })
+        const docs = await getUsers({ page: next, limit, search })
 
-        if (docs.length === 0) {
-          commit(SET_ACTION_LOADING, false)
-        } else {
+        if (docs.length) {
           commit(INCREMENT_PAGE)
           commit(SET_DOCS, {
             docs,
-            nextPageToken: pageToken,
             lastPage: next
           })
 
           commit(SET_ITEMS, docs)
         }
+
         commit(SET_ACTION_LOADING, false)
 
         return []

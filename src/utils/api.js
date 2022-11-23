@@ -30,7 +30,7 @@ const fetch = () => {
       if (status && status === 401) logout()
 
       if (error.response) {
-        const { errors } = error.response.data
+        const errors = error.response.data
         if (errors) throw errors
       }
 

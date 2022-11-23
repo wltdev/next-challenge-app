@@ -1,7 +1,13 @@
 import api from '@/utils/api'
 
-export const getUsers = async ({ lastPage, limit }) => {
-  const { data } = await api.get('/users')
+export const getUsers = async ({ page, limit, search }) => {
+  const { data } = await api.get('/users', {
+    params: {
+      page: Number(page) - 1,
+      limit,
+      term: search
+    }
+  })
 
   return data
 }

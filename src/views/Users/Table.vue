@@ -67,6 +67,11 @@ const prevPage = () => {
               >
                 Permission
               </th>
+              <th
+                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2"
+              >
+                Created at
+              </th>
               <th class="text-secondary opacity-7" />
             </tr>
           </thead>
@@ -103,6 +108,11 @@ const prevPage = () => {
               <td>
                 <p class="text-xs text-secondary mb-0">
                   {{ doc.permission }}
+                </p>
+              </td>
+              <td>
+                <p class="text-xs text-secondary mb-0">
+                  {{ doc.createdAt ?? formatDate(doc.createdAt) }}
                 </p>
               </td>
               <td class="align-middle">

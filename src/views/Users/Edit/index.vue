@@ -1,7 +1,8 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, reactive } from 'vue'
 import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
+import { createToaster } from '@meforma/vue-toaster'
 import VsudAvatar from '@/components/VsudAvatar.vue'
 import CSwitch from '@/components/CSwitch.vue'
 import VsudInput from '@/components/VsudInput.vue'
@@ -11,6 +12,11 @@ import img1 from '@/assets/img/default-user.png'
 const store = useStore()
 const route = useRoute()
 const doc = computed(() => store.getters['users/getDoc'])
+
+const toast = createToaster()
+const state = reactive({
+  errors: []
+})
 
 const getDocByParams = async () => {
   if (!doc.value.uid) {
@@ -25,12 +31,27 @@ onMounted(() => {
 })
 
 const setAdmin = async (admin) => {
-  const permission = admin ? 'admin' : 'standard'
-  await store.dispatch('users/updateDoc', { permission })
+  try {
+    const permission = admin ? 'admin' : 'standard'
+    await store.dispatch('users/updateDoc', { permission })
+  } catch (error) {
+    state.errors = error
+    toast.error(error.message, {
+      position: 'bottom'
+    })
+  }
 }
 
 const _updateUser = async () => {
-  await store.dispatch('users/updateDoc', doc.value)
+  try {
+    await store.dispatch('users/updateDoc', doc.value)
+  } catch (error) {
+    state.errors = error
+    toast.error(error.message, {
+      position: 'bottom'
+    })
+    // console.log(state)
+  }
 }
 
 </script>
@@ -91,28 +112,6 @@ const _updateUser = async () => {
                 </div>
               </div>
 
-              <!-- <div class="row">
-                <div class="col">
-                  <label>Password</label>
-                  <VsudInput
-                    v-model:value="doc.password"
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                  />
-                </div>
-                <div class="col">
-                  <label>Password confirmation</label>
-                  <VsudInput
-                    v-model:value="doc.password"
-                    type="password"
-                    placeholder="Password"
-                    name="password"
-                  />
-                </div>
-              </div> -->
-
-              <!-- <vsud-switch id="rememberMe" checked>Lembrar dados</vsud-switch> -->
               <div class="text-center">
                 <VsudButton
                   class="my-4 mb-2"
