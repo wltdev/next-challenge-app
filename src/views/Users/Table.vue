@@ -8,6 +8,7 @@ import VsudBadge from '@/components/VsudBadge.vue'
 import VsudInput from '@/components/VsudInput.vue'
 import { formatDate } from '@/common/helpers'
 import img1 from '@/assets/img/default-user.png'
+import AddUserModal from '@/components/users/AddUserModal.vue'
 
 const router = useRouter()
 const store = useStore()
@@ -44,7 +45,10 @@ const setSearch = () => {
   <div class="card mb-4">
     <div class="card-header pb-0">
       <div class="d-flex justify-content-between align-i">
-        <h6>Usuários</h6>
+        <div>
+          <h6>Usuários</h6>
+          <AddUserModal />
+        </div>
         <vsud-input
           v-model:value="search"
           :icon-clickable="true"

@@ -34,7 +34,7 @@ const shadowClick = ($event) => {
       <div class="custom-modal__shadow" @click="shadowClick($event)">
         <div class="custom-modal__modal" :class="size">
           <div v-if="!hideCloseBtn" class="custom-modal__modal__close" @click="emit('close')">
-            <img src="@/assets/img/introspecta/close.svg" alt="" />
+            <img src="@/assets/img/nextar/close.svg" alt="" />
           </div>
           <div class="custom-modal__modal__content">
             <slot />
@@ -81,7 +81,7 @@ const shadowClick = ($event) => {
     }
 
     &__content {
-      margin-top: 2rem;
+      // margin-top: 2rem;
     }
 
     &.large {
