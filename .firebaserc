@@ -1,26 +1,12 @@
 {
   "projects": {
-    "default": "introspecta-dev"
+    "default": "nextar-challenge-app"
   },
   "targets": {
-    "introspecta-dev": {
+    "nextar-challenge-app": {
       "hosting": {
-        "admin-dev": [
-          "admin-introspecta-dev"
-        ]
-      }
-    },
-    "introspecta-staging": {
-      "hosting": {
-        "admin-staging": [
-          "admin-introspecta-staging"
-        ]
-      }
-    },
-    "introspecta-production": {
-      "hosting": {
-        "admin-production": [
-          "admin-introspecta"
+        "nextar-challenge-app": [
+          "nextar-challenge-app"
         ]
       }
     }

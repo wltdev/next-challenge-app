@@ -43,8 +43,15 @@ const setAdmin = async (admin) => {
 }
 
 const _updateUser = async () => {
+  const payload = {
+    name: doc.value.name,
+    phone: doc.value.phone
+  }
   try {
-    await store.dispatch('users/updateDoc', doc.value)
+    await store.dispatch('users/updateDoc', payload)
+    toast.success('User updated', {
+      position: 'bottom'
+    })
   } catch (error) {
     state.errors = error
     toast.error(error.message, {

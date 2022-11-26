@@ -8,7 +8,7 @@
     "build": "vite build",
     "preview": "vite preview --port 8080",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src",
-    "deployTest": "firebase deploy --only hosting:admin-dev --project introspecta-dev",
+    "deployTest": "firebase deploy --only hosting",
     "format": "prettier .  --write"
   },
   "dependencies": {
