@@ -2,6 +2,8 @@
 import { onMounted, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
+import { createToaster } from '@meforma/vue-toaster'
+
 import CPagination from '@/components/tables/CPagination.vue'
 import VsudAvatar from '@/components/VsudAvatar.vue'
 import VsudBadge from '@/components/VsudBadge.vue'
@@ -12,6 +14,8 @@ import AddUserModal from '@/components/users/AddUserModal.vue'
 
 const router = useRouter()
 const store = useStore()
+const toast = createToaster()
+
 const docs = computed(() => store.getters['users/getItems'])
 const activePage = computed(() => store.getters['users/getPage'])
 const isLoading = computed(() => store.getters['users/isLoading'])
@@ -37,6 +41,20 @@ const prevPage = () => {
 
 const setSearch = () => {
   store.dispatch('users/getBySearch', search.value)
+}
+
+const deleteUser = async (doc) => {
+  console.log(doc)
+  try {
+    await store.dispatch('users/deleteDoc', doc._id)
+    toast.success('User has beem deleted', {
+      position: 'bottom'
+    })
+  } catch (error) {
+    toast.error(error.message, {
+      position: 'bottom'
+    })
+  }
 }
 
 </script>
@@ -138,13 +156,19 @@ const setSearch = () => {
                   {{ doc.createdAt ?? formatDate(doc.createdAt) }}
                 </p>
               </td>
-              <td class="align-middle">
+              <td class="gap-2">
                 <a
-                  class="text-secondary font-weight-bold text-xs link"
+                  class="btn btn-sm btn-info text-white font-weight-bold text-xs link"
                   data-toggle="tooltip"
                   data-original-title="Edit user"
                   @click="setDoc(doc)"
-                >Visualizar</a>
+                >Show</a>
+                <a
+                  class="btn btn-sm btn-danger text-white font-weight-bold text-xs link"
+                  data-toggle="tooltip"
+                  data-original-title="Delete user"
+                  @click="deleteUser(doc)"
+                >Delete</a>
               </td>
             </tr>
           </tbody>

@@ -27,3 +27,7 @@ export const getUser = async (id) => {
 
   return data
 }
+
+export const deleteUser = async (id) => {
+  return await api.delete(`/users/${id}`)
+}

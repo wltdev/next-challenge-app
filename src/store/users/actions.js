@@ -9,7 +9,7 @@ import {
   SET_SEARCH
 } from './mutations'
 
-import { getUsers, createUser, updateUser, getUser } from '@/services/usersService'
+import { getUsers, createUser, updateUser, getUser, deleteUser } from '@/services/usersService'
 
 export const actions = {
   setDocs: async ({ commit, state }) => {
@@ -197,6 +197,30 @@ export const actions = {
 
       commit(SET_ITEMS, items)
       commit(SET_DOCS, docs)
+    } catch (error) {
+      console.log(error)
+      throw error
+    } finally {
+      commit('SET_GLOBAL_LOADING', false, {
+        root: true
+      })
+    }
+  },
+
+  deleteDoc: async ({ commit, state }, id) => {
+    const { docs, items } = state
+    commit('SET_GLOBAL_LOADING', true, {
+      root: true
+    })
+    console.log(items, docs)
+    try {
+      await deleteUser(id)
+      const newItems = items.filter((doc) => doc && doc._id !== id)
+      const newDocs = docs.filter((doc) => doc && doc._id !== id)
+      console.log(items, docs)
+
+      commit(SET_ITEMS, newItems)
+      commit(SET_DOCS, newDocs)
     } catch (error) {
       console.log(error)
       throw error
