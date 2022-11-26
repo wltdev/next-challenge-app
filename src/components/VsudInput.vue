@@ -1,7 +1,10 @@
 <template>
   <div class="form-group">
     <div :class="hasIcon(icon)">
-      <span v-if="iconDir === 'left'" class="input-group-text">
+      <span
+        v-if="iconDir === 'left'" class="input-group-text" :class="{'cursor-pointer': iconClickable }"
+        @click="$emit('icon-click')"
+      >
         <i :class="getIcon(icon)" />
       </span>
       <input
@@ -15,7 +18,7 @@
         :isRequired="isRequired"
         @input="(e) => $emit('update:value', e.target.value.trim())"
       />
-      <span v-if="iconDir === 'right'" class="input-group-text">
+      <span v-if="iconDir === 'right'" class="input-group-text" @click="$emit('icon-click')">
         <i :class="getIcon(icon)" />
       </span>
     </div>
@@ -31,6 +34,10 @@ export default {
       default: 'default'
     },
     valid: {
+      type: Boolean,
+      default: false
+    },
+    iconClickable: {
       type: Boolean,
       default: false
     },
@@ -79,3 +86,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.cursor-pointer {
+  cursor: pointer;
+
+  &:hover {
+    background-color: cadetblue;
+  }
+}
+</style>

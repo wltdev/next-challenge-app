@@ -150,7 +150,11 @@ export default {
   async mounted() {
     this.$store.state.isAbsolute = true
     this.$store.state.isNavFixed = false
-    this.editUser = await getLocalUser()
+    const user = await getLocalUser()
+    this.editUser = {
+      name: user.name,
+      phone: user.phone
+    }
   },
 
   beforeUnmount() {
@@ -166,7 +170,20 @@ export default {
           position: 'bottom'
         })
       } else {
+        this.update()
+      }
+    },
+
+    async update () {
+      try {
         await this.updateProfile({ ...this.editUser, password: this.password })
+        this.$toast.success('Profile updated successful', {
+          position: 'bottom'
+        })
+      } catch (error) {
+        this.$toast.error(error.message, {
+          position: 'bottom'
+        })
       }
     }
   }

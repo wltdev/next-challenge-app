@@ -48,7 +48,7 @@ export const actions = {
       return user
     } catch (error) {
       commit(SET_USER_ERROR, error)
-      throw Error('user_incorret_info')
+      throw error
     } finally {
       commit('SET_GLOBAL_LOADING', false, {
         root: true

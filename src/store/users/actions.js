@@ -5,7 +5,8 @@ import {
   INCREMENT_PAGE,
   DECREMENT_PAGE,
   SET_ITEMS,
-  SET_ACTION_LOADING
+  SET_ACTION_LOADING,
+  SET_SEARCH
 } from './mutations'
 
 import { getUsers, updateUser, getUser } from '@/services/usersService'
@@ -18,6 +19,31 @@ export const actions = {
     try {
       const { page, limit, search } = state
       const docs = await getUsers({ page, limit, search })
+      commit(SET_DOCS, {
+        docs,
+        lastPage: 1
+      })
+      commit(SET_ITEMS, docs)
+    } catch (error) {
+      console.log(error)
+      throw error
+    } finally {
+      commit('SET_GLOBAL_LOADING', false, {
+        root: true
+      })
+    }
+  },
+
+  getBySearch: async ({ commit, state }, search) => {
+    commit('SET_GLOBAL_LOADING', true, {
+      root: true
+    })
+
+    commit(SET_SEARCH, search)
+
+    try {
+      const { limit } = state
+      const docs = await getUsers({ page: 1, limit, search })
       commit(SET_DOCS, {
         docs,
         lastPage: 1

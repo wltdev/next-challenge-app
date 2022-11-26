@@ -1,9 +1,11 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { onMounted, computed, ref } from 'vue'
 import { useStore } from 'vuex'
 import { useRouter } from 'vue-router'
 import CPagination from '@/components/tables/CPagination.vue'
 import VsudAvatar from '@/components/VsudAvatar.vue'
+import VsudBadge from '@/components/VsudBadge.vue'
+import VsudInput from '@/components/VsudInput.vue'
 import { formatDate } from '@/common/helpers'
 import img1 from '@/assets/img/default-user.png'
 
@@ -12,6 +14,8 @@ const store = useStore()
 const docs = computed(() => store.getters['users/getItems'])
 const activePage = computed(() => store.getters['users/getPage'])
 const isLoading = computed(() => store.getters['users/isLoading'])
+
+const search = ref('')
 
 onMounted(() => {
   if (!docs.value.length) store.dispatch('users/setDocs')
@@ -30,23 +34,34 @@ const prevPage = () => {
   store.dispatch('users/prevPage')
 }
 
+const setSearch = () => {
+  store.dispatch('users/getBySearch', search.value)
+}
+
 </script>
 
 <template>
   <div class="card mb-4">
     <div class="card-header pb-0">
-      <h6>Usuários</h6>
+      <div class="d-flex justify-content-between align-i">
+        <h6>Usuários</h6>
+        <vsud-input
+          v-model:value="search"
+          :icon-clickable="true"
+          icon="fa fa-search"
+          icon-dir="left"
+          type="text"
+          placeholder="Ex: jose.."
+          name="search"
+          @icon-click="setSearch"
+        />
+      </div>
     </div>
     <div class="card-body px-0 pt-0 pb-2">
       <div class="table-responsive p-0">
         <table class="table align-items-center mb-0">
           <thead>
             <tr>
-              <!-- <th
-                class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
-              >
-                Order
-              </th> -->
               <th
                 class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7"
               >
@@ -105,10 +120,14 @@ const prevPage = () => {
                   {{ doc.phone }}
                 </p>
               </td>
-              <td>
-                <p class="text-xs text-secondary mb-0">
+              <td class="align-middle text-center text-sm">
+                <vsud-badge
+                  :color="doc.permission === 'admin' ? 'info' : 'warning'"
+                  variant="gradient"
+                  size="sm"
+                >
                   {{ doc.permission }}
-                </p>
+                </vsud-badge>
               </td>
               <td>
                 <p class="text-xs text-secondary mb-0">
@@ -140,16 +159,5 @@ const prevPage = () => {
 <style lang="scss" scoped>
 .link {
   cursor: pointer;
-}
-
-.creator {
-  background-color: #e2efed6e;
-}
-
-.creator-star {
-  i {
-    font-size: 15px;
-    color: #ffb20087;
-  }
 }
 </style>

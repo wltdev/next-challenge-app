@@ -6,7 +6,8 @@ import {
   RESET_DOC,
   SET_ITEMS,
   INCREMENT_PAGE,
-  DECREMENT_PAGE
+  DECREMENT_PAGE,
+  SET_SEARCH
 } from './mutations'
 import { actions } from './actions'
 
@@ -43,6 +44,10 @@ export default {
     },
     [INCREMENT_PAGE](state) {
       state.page += 1
+    },
+    [SET_SEARCH](state, search) {
+      state.search = search
+      state.page = 1
     },
     [DECREMENT_PAGE](state) {
       state.page -= 1
